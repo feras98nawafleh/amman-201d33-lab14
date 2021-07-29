@@ -12,7 +12,10 @@ function populateForm() {
   //TODO: Add an <option> tag inside the form's select for each product
   const selectElement = document.getElementById('items');
   for (let i in Product.allProducts) {
-
+    let opt = document.createElement('option');
+    opt.value = Product.allProducts[i].filePath;
+    opt.innerHTML = Product.allProducts[i].name;
+    selectElement.appendChild(opt);
   }
 
 }
@@ -23,7 +26,7 @@ function populateForm() {
 function handleSubmit(event) {
 
   // TODO: Prevent the page from reloading
-
+  event.preventDefault();
   // Do all the things ...
   addSelectedItemToCart();
   cart.saveToLocalStorage();
@@ -37,15 +40,26 @@ function addSelectedItemToCart() {
   // TODO: suss out the item picked from the select list
   // TODO: get the quantity
   // TODO: using those, add one item to the Cart
+  let item = document.getElementById('items').value;
+  let  quanity = document.getElementById('quantity').value;
+  cart.addItem(item, quanity);
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
-function updateCounter() {}
+function updateCounter() {
+  let counter = document.getElementById('itemCount');
+  counter.innerText = product.allProducts.length;
+}
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   // TODO: Get the item and quantity from the form
+  let item = document.getElementById('items').value;
+  let  quanity = document.getElementById('quantity').value;
   // TODO: Add a new element to the cartContents div with that information
+  contents = document.createElement('cartContents');
+  contents.appendChild(item);
+  contents.appendChild(quanity);
 }
 
 // Set up the "submit" event listener on the form.
